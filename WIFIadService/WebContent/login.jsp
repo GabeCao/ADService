@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<h3>登录</h3>
+<h3>登录fd</h3>
 <form action="<%=basePath%>login" method="post">
 username:<input type="text" name="username"><br><br>
 password:<input type="password" name="password"><br><br>
