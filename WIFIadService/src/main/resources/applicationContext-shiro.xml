@@ -3,7 +3,14 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="loginRealm" class="com.zytx.realm.LoginRealm"></bean>
+	<bean id="loginRealm" class="com.zytx.realm.LoginRealm">
+		<property name="credentialsMatcher" ref="credentialsMatcher"></property>
+	</bean>
+	
+	<bean id="credentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<property name="hashAlgorithmName" value="md5"></property>
+		<property name="hashIterations" value="3"></property>
+	</bean>
 	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
 		<property name="realm" ref="loginRealm"></property>
 	</bean>
@@ -19,6 +26,8 @@
 				/js/** = anon
 				/shiro/logout = logout
 				/login = anon
+				/signup.jsp = anon
+				/signup = anon
 				/** = authc
 			</value>
 		</property>

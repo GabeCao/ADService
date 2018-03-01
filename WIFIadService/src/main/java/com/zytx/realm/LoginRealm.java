@@ -18,6 +18,8 @@ import com.zytx.entity.User;
 
 public class LoginRealm extends AuthenticatingRealm {
 
+	@Autowired
+	private UserDao userDao;
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
@@ -25,11 +27,17 @@ public class LoginRealm extends AuthenticatingRealm {
 		if("uk".equals(username)) {
 			throw new UnknownAccountException("用户不存在");
 		}
-		Object principal = username;
-		Object credentials = "123";
+		User user = userDao.getUserByusername(username);
+		if(user == null) {
+			throw new UnknownAccountException("用户不存在");
+		}
+		Object principal = user;
+		Object credentials = user.getPassword();
 		String realmName = getName();
+		ByteSource salt = ByteSource.Util.bytes(username);
+		
 		SimpleAuthenticationInfo info = new 
-				SimpleAuthenticationInfo(principal, credentials, realmName);
+				SimpleAuthenticationInfo(principal, credentials,salt, realmName);
 		return info;
 	}
 

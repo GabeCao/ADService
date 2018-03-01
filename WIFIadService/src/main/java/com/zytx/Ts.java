@@ -6,7 +6,7 @@ public class Ts {
 
 	public static void main(String[] args) {
 		String source = "123";
-		String salt = "shiro";
+		String salt = "b";
 		int hashIterations = 3;
 		SimpleHash re = new SimpleHash("md5", source, salt, hashIterations);
 		System.out.println(re);
